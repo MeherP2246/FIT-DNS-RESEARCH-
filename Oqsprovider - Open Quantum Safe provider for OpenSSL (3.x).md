@@ -131,12 +131,17 @@ oqsprovider = oqsprovider_sect
 activate = 1
 
 ```
-save the file and run the below command to check the 
+save the file and run the below command to check the provider version information 
 
 ```
-openssl list -providers
+LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/openssl list -providers -verbose -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider
+
+openssl list -providers -verbose
 
 ```
+The output :
+
+
 openssl list -all-algorithms -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider
 
 
