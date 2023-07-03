@@ -123,6 +123,10 @@ sudo apt  install docker && docker-compose
 
 cd dns-falcon
 
+sudo rm -rf pdns
+
+cp /home/falcon/pdns  /home/falcon/dns-falcon  
+
 sudo docker-compose up -d
 
 sudo python3 -m venv venv
