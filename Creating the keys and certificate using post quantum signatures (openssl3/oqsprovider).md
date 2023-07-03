@@ -141,10 +141,26 @@ openssl list -providers -verbose
 ```
 The output :
 
+![image](https://github.com/MeherP2246/FIT-DNS-RESEARCH-/assets/134104519/7060fe9d-d3a1-4287-bf99-d10c4365dd28)
+
 
 openssl list -all-algorithms -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider
 
 
+### Step 5 : Creating the keys and certificate using post quantum signatures 
 
+    1. Falcon512
 
+```
+sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/openssl req -x509 -new -newkey falcon512 -keyout qsc.key -out qsc.crt -nodes -subj "/CN=oqstest" -days 365 -config /home/openssl3/openssl/apps/openssl.cnf -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider -provider default
 
+```
+    2. p256_falcon512
+```
+sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/openssl req -x509 -new -newkey p256_falcon512 -keyout qsc.key  -out qsc.crt -nodes -subj "/CN=oqstest" -days 365 -config /home/openssl3/openssl/apps/openssl.cnf -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider -provider default
+
+```
+    3. p256_dilithium2
+```
+sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/openssl req -x509 -new -newkey p256_dilithium2 -keyout abc.key -out abc.crt -nodes -subj "/CN=oqstest" -days 365 -config /home/openssl3/openssl/apps/openssl.cnf -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider -provider default
+```
