@@ -1,4 +1,4 @@
-# Oqsprovider - Open Quantum Safe provider for OpenSSL (3.x)
+# Creating the keys and certificate using post quantum signatures (Openssl3/Oqsprovider)
 
 ### Step 1 : Installation of pre-requisites
 
