@@ -34,6 +34,7 @@ cd ~
 Example for building and installing liboqs in .local:
 
 Note : Please replace all the path as per your system configuration, for an example , if you want path for your .local directory just do 
+
 ``` mlocate .local ```  this command will give you the exact path, copy the path and add it into the command and run it. 
 ```
 sudo git clone https://github.com/open-quantum-safe/liboqs.git
