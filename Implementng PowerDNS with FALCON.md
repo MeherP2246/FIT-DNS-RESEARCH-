@@ -7,6 +7,8 @@ Create your own  new virtual machine (ubuntu)
 
 ### Step 2 : Installing the liboqs provides
 
+Note : Replace all the path as per your configuration. 
+
 i. Installing pre-requisites before moving on to install the required libraries and programs.
 
 ```
