@@ -164,7 +164,36 @@ sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/open
 sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/openssl req -x509 -new -newkey p256_dilithium2 -keyout abc.key -out abc.crt -nodes -subj "/CN=oqstest" -days 365 -config /home/openssl3/openssl/apps/openssl.cnf -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider -provider default
 ```
 
-
-
-
 ### Example of creation and verification of quantum-safe digital signatures using  Cryptographic Message Syntax (CMS)
+
+1.Signing data
+
+In order to generate signed data, a two-step process must be followed: The first step involves generating a certificate employing a Quantum-Safe Cryptography (QSC) algorithm. Subsequently, this certificate, along with its associated signature algorithm, is utilized in the second step to produce the signed data.
+
+  Step 1: Create quantum-safe key pair and self-signed certificate:
+```
+sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/openssl req -x509 -new -newkey p256_falcon512 -keyout qsc.key  -out qsc.crt -nodes -subj "/CN=oqstest" -days 365 -config /home/openssl3/openssl/apps/openssl.cnf -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider -provider default
+```
+By changing the -newkey parameter algorithm name any of the supported quantum-safe or hybrid algorithms can be utilized instead of the sample algorithm p256_falcon512.
+
+   Step 2: Sign data:
+
+As the CMS (Cryptographic Message Syntax) standard requires the presence of a digest algorithm, while quantum-safe crypto does not, in difference to the QSC certificate creation command above, passing a message digest algorithm via the -md parameter is mandatory. 
+
+Note: here input file will be your any file which you want to sign and verify using post qunatum signature  
+
+```
+sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64  /home/openssl3/.local/bin/openssl cms -in inputfile -sign -signer qsc.crt -inkey qsc.key -nodetach -outform pem -binary -out signedfile -md sha512 -provider-path /home/openssl3/oqs-provider/_build/lib  -provider default -provider oqsprovider
+```
+Data to be signed is to be contained in the file named inputfile. The resultant CMS (Cryptographic Message Syntax) output is contained in file signedfile. The QSC algorithm used is the same signature algorithm utilized for signing the certificate qsc.crt.
+
+2. Verifying data
+
+Continuing the example above, the following command verifies the CMS file signedfile and outputs the outputfile. Its contents should be identical to the original data in inputfile above.
+
+```
+sudo LD_LIBRARY_PATH=/home/openssl3/.local/lib64 /home/openssl3/.local/bin/openssl cms -verify -CAfile qsc.crt -inform pem -in signedfile -crlfeol -out outputfile -provider-path /home/openssl3/oqs-provider/_build/lib -provider oqsprovider -provider default
+```
+
+
+
